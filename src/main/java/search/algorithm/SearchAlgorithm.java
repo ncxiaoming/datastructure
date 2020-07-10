@@ -14,15 +14,17 @@ public class SearchAlgorithm {
 
     public static void main(String[] args) {
 
-        int[] arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 13};
-//        int[] arr = new int[100];
-//        for (int i = 0; i < arr.length; i++) {
-//            arr[i] = i * 10;
-//        }
+//        int[] arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 11, 12, 13, 13, 13};
+        int[] arr = new int[5];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (i +  1) * 5;
+        }
 
 //        List<Integer> integers = interpolationSearchAlgorithm(arr, 16, 0, arr.length - 1);
-        List<Integer> integers = fibonacciSearchAlgorithm(arr, 14);
-        System.out.println(integers);
+//        List<Integer> integers = fibonacciSearchAlgorithm(arr, 13);
+        int i = binarySearchAlgorithm1(arr, 24, 0, arr.length - 1);
+        System.out.println(Arrays.toString(arr));
+        System.out.println(i);
 
     }
 
@@ -53,6 +55,25 @@ public class SearchAlgorithm {
         }
     }
 
+    private static int binarySearchAlgorithm1(int[] arr, int target, int left, int right) {
+
+
+        if (left > right) {
+            return right;
+        }
+
+        int middle = (right + left) / 2;
+
+        if (target > arr[middle]) {
+            return binarySearchAlgorithm1(arr, target, middle + 1, right);
+        } else if (target < arr[middle]) {
+            return binarySearchAlgorithm1(arr, target, left, middle - 1);
+        } else {
+
+            return middle;
+        }
+    }
+
     /**
      * 插值查找
      * @param arr 数据
@@ -78,6 +99,12 @@ public class SearchAlgorithm {
         }
     }
 
+    /**
+     * 数组长度过小时, 会出BUG的
+     * @param arr
+     * @param target
+     * @return
+     */
     private static List<Integer> fibonacciSearchAlgorithm(int[] arr, int target) {
 
         int low = 0;
@@ -116,6 +143,47 @@ public class SearchAlgorithm {
         return new ArrayList<>();
     }
 
+    private static int fibonacciSearchAlgorithm1(int[] arr, int target) {
+
+        int low = 0;
+        int high = arr.length - 1;
+        int key = 0;
+        int middle;
+
+        int[] fibonacciArr = getFibonacciArr(10);
+
+        while (high > fibonacciArr[key] - 1) {
+            key++;
+        }
+
+        int[] temp = Arrays.copyOf(arr, fibonacciArr[key]);
+
+        for (int i = high + 1; i < fibonacciArr[key]; i++) {
+            temp[i] = arr[high];
+        }
+
+        while (low <= high) {
+            if (key - 1 < 0) {
+                return high;
+            }
+            middle = low + fibonacciArr[key - 1] - 1;
+            if (target > temp[middle]) {
+                low = middle + 1;
+                key -= 2;
+            } else if (target < temp[middle]) {
+                high = middle - 1;
+                key -= 1;
+            } else {
+                if (middle <= high) {
+                    return middle;
+                } else {
+                    return high;
+                }
+            }
+        }
+        return high;
+    }
+
     private static int[] getFibonacciArr(int size) {
         int[] arr = new int[size];
         arr[0] = 1;
@@ -140,5 +208,60 @@ public class SearchAlgorithm {
         return list;
     }
 
+    /**
+     *
+     * @param arr 待查找的数组
+     * @param findVal 要查找的数
+     * @return 找到返回下标,没找到返回-1
+     */
+    public static int fibSearch(int[] arr,int findVal){
+        //变量的定义
+        int left = 0; //左边索引
+        int right =arr.length -1; //右边索引
+        int k = 0; //斐波拉契分割数值的下标
+        int mid = 0; //存放找到的mid值
+        int[] f = getFibonacciArr(10); //获取斐波拉契数列
+        //循环处理来查找斐波拉契分割数值的下标所对应的值
+        while (right > f[k] -1){
+            k++;
+        }
+        //可能存在f[k]的值大于了arr的长度,我们需要扩容,并指向数组temp[]
+        //不足的部分使用0来补齐
+        int[] temp = Arrays.copyOf(arr, f[k]);
+        //我们使用arr数组的最后的数来填充temp数组
+        //如:temp={1,8,10,89,1000,1234,0,0,0}====>{1,8,10,89,1000,1234,1234,1234,1234}
+        //right +1 = 1234
+        for (int i = right +1; i <temp.length ; i++) {
+            temp[i] = arr[right];
+        }
+        //来找我们的findVal,循环处理
+        while (left <= right){
+            mid = left + f[k -1] -1;
+            if (findVal < temp[mid]){ //我们应该在数组的左边继续找
+                right = mid -1;
+                //说明:
+                //1.我们数组的全部元数 = left左边 +right元素
+                //2.因为我们的黄金分割点是 f[k] = f[k -1] + f[k -2]
+                //3. 可以发现的,当前左边还有f[k -1]个元素,因此可以继续拆分f[k -1] = f[k -2] + f[k -3]等
+                // 也就是说在f[k -1]的左边继续查找,即 k-- 即 mid = f[k - 1 -1] -1
+                k --;
+            }else if (findVal > temp[mid]){ //我们应该在数组的右边继续找
+                left = mid +1;
+                //说明:
+                //1.我们数组的全部元数 = left左边 +right元素
+                //2.因为我们的黄金分割点是 f[k] = f[k -1] + f[k -2]
+                //3.可以发现的,当前右边还有f[k -2]个元素,因此可以继续拆分f[k -1] = f[k -3] + f[k -4]等
+                //即在f[k -2]的右边继续查找 k -=2个元素,即 mid = f[k -1 -2] -1
+                k -= 2;
+            }else { //表示找到了
+                //比较下,我们返回的最小的那个
+                if (mid <= right){
+                    return mid;
+                }
+                return right;
+            }
+        }
+        return -1;
+    }
 
 }
