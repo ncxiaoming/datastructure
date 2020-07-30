@@ -15,26 +15,30 @@ public class BinaryTreeDemo {
         BinaryTree.Node node5 = new BinaryTree.Node(5);
         BinaryTree.Node node6 = new BinaryTree.Node(6);
         BinaryTree.Node node7 = new BinaryTree.Node(7);
-        BinaryTree.Node node8 = new BinaryTree.Node(8);
-        BinaryTree.Node node9 = new BinaryTree.Node(9);
+//        BinaryTree.Node node8 = new BinaryTree.Node(8);
+//        BinaryTree.Node node9 = new BinaryTree.Node(9);
         node1.left = node2;
         node2.left = node4;
-        node2.right = node8;
-        node4.left = node9;
-        node4.right = node6;
-        node6.right = node7;
+        node2.right = node5;
         node1.right = node3;
-        node3.left = node5;
+        node3.left = node6;
+        node3.right = node7;
+//        node2.right = node8;
+//        node4.left = node9;
+//        node4.right = node6;
+//        node6.right = node7;
+//        node1.right = node3;
+//        node3.left = node5;
 
         BinaryTree binaryTree = new BinaryTree();
         binaryTree.root = node1;
 
-        binaryTree.preOrder();
+        binaryTree.inOrder();
 //        System.out.println(binaryTree.postSearchOrder(4));
 
-        System.out.println(binaryTree.delRuleNode(2));
+//        System.out.println(binaryTree.delRuleNode(2));
 
-        binaryTree.preOrder();
+//        binaryTree.preOrder();
 
     }
 
@@ -79,6 +83,7 @@ public class BinaryTreeDemo {
         /**
          * 前序查找
          * 先判断当前节点, 然后判断左节点, 最后判断右节点
+         *
          * @param no 查询节点
          */
         public Node preSearchOrder(int no) {
@@ -91,6 +96,7 @@ public class BinaryTreeDemo {
         /**
          * 中序查找
          * 先判断左节点, 然后判断当前节点, 最后判断右节点
+         *
          * @param no 查询节点
          */
         public Node inSearchOrder(int no) {
@@ -103,6 +109,7 @@ public class BinaryTreeDemo {
         /**
          * 后序查找
          * 先判断左节点, 然后判断右节点, 最后判断当前节点
+         *
          * @param no 查询节点
          */
         public Node postSearchOrder(int no) {
@@ -114,6 +121,7 @@ public class BinaryTreeDemo {
 
         /**
          * 删除节点
+         *
          * @param no 待删除的节点编号
          * @return true 成功, false 失败
          */
@@ -126,10 +134,10 @@ public class BinaryTreeDemo {
         }
 
         /**
-         *
          * 规则删除, 如果待删除的节点存在子节点:
-         *  1. 如果该节点A存在一个子节点B, 则子节点B替换节点A
-         *  2. 如果该节点A存在左子节点B和右子节点C, 则左子节点B替代节点A
+         * 1. 如果该节点A存在一个子节点B, 则子节点B替换节点A
+         * 2. 如果该节点A存在左子节点B和右子节点C, 则左子节点B替代节点A
+         *
          * @param no 待删除节点
          */
         public boolean delRuleNode(int no) {
@@ -153,8 +161,9 @@ public class BinaryTreeDemo {
 
         /**
          * 替换方法,
-         *  1. 如果该节点A存在一个子节点B, 则子节点B替换节点A
-         *  2. 如果该节点A存在左子节点B和右子节点C, 则左子节点B替代节点A
+         * 1. 如果该节点A存在一个子节点B, 则子节点B替换节点A
+         * 2. 如果该节点A存在左子节点B和右子节点C, 则左子节点B替代节点A
+         *
          * @param node
          * @param flag true 删除左节点, false 删除右节点
          * @return
@@ -212,20 +221,20 @@ public class BinaryTreeDemo {
 
             public void inOrder() {
                 if (this.left != null) {
-                    this.left.preOrder();
+                    this.left.inOrder();
                 }
                 System.out.println(this);
                 if (this.right != null) {
-                    this.right.preOrder();
+                    this.right.inOrder();
                 }
             }
 
             public void postOrder() {
                 if (this.left != null) {
-                    this.left.preOrder();
+                    this.left.postOrder();
                 }
                 if (this.right != null) {
-                    this.right.preOrder();
+                    this.right.postOrder();
                 }
                 System.out.println(this);
             }
@@ -233,6 +242,7 @@ public class BinaryTreeDemo {
             /**
              * 前序查找
              * 先判断左节点, 然后判断当前节点, 最后判断右节点
+             *
              * @param no 查询节点
              */
             public Node preSearchOrder(int no) {
@@ -259,6 +269,7 @@ public class BinaryTreeDemo {
             /**
              * 中序查找
              * 先判断当前节点, 然后判断左节点, 最后判断右节点
+             *
              * @param no 查询节点
              */
             public Node inSearchOrder(int no) {
@@ -285,6 +296,7 @@ public class BinaryTreeDemo {
             /**
              * 后序查找
              * 先判断左节点, 然后判断右节点, 最后判断当前节点
+             *
              * @param no 查询节点
              */
             public Node postSearchOrder(int no) {
@@ -337,8 +349,9 @@ public class BinaryTreeDemo {
 
             /**
              * 规则删除, 如果待删除的节点存在子节点:
-             *  1. 如果该节点A存在一个子节点B, 则子节点B替换节点A
-             *  2. 如果该节点A存在左子节点B和右子节点C, 则左子节点B替代节点A
+             * 1. 如果该节点A存在一个子节点B, 则子节点B替换节点A
+             * 2. 如果该节点A存在左子节点B和右子节点C, 则左子节点B替代节点A
+             *
              * @param no 待删除节点
              * @return
              */
