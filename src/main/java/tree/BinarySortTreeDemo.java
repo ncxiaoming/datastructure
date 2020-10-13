@@ -23,9 +23,6 @@ public class BinarySortTreeDemo {
         binarySortTree.delete(10);
         binarySortTree.delete(3);
         binarySortTree.delete(7);
-        binarySortTree.delete(12);
-        binarySortTree.delete(5);
-        binarySortTree.delete(1);
         binarySortTree.delete(9);
         binarySortTree.delete(11);
 
