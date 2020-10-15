@@ -100,6 +100,7 @@ public class SearchAlgorithm {
     }
 
     /**
+     * 斐波那契查找
      * 数组长度过小时, 会出BUG的
      * @param arr
      * @param target
@@ -143,6 +144,12 @@ public class SearchAlgorithm {
         return new ArrayList<>();
     }
 
+    /**
+     * 斐波那契查找
+     * @param arr
+     * @param target
+     * @return
+     */
     private static int fibonacciSearchAlgorithm1(int[] arr, int target) {
 
         int low = 0;
@@ -209,18 +216,23 @@ public class SearchAlgorithm {
     }
 
     /**
-     *
+     * 斐波那契查找
      * @param arr 待查找的数组
      * @param findVal 要查找的数
      * @return 找到返回下标,没找到返回-1
      */
     public static int fibSearch(int[] arr,int findVal){
         //变量的定义
-        int left = 0; //左边索引
-        int right =arr.length -1; //右边索引
-        int k = 0; //斐波拉契分割数值的下标
-        int mid = 0; //存放找到的mid值
-        int[] f = getFibonacciArr(10); //获取斐波拉契数列
+        //左边索引
+        int left = 0;
+        //右边索引
+        int right =arr.length -1;
+        //斐波拉契分割数值的下标
+        int k = 0;
+        //存放找到的mid值
+        int mid = 0;
+        //获取斐波拉契数列
+        int[] f = getFibonacciArr(10);
         //循环处理来查找斐波拉契分割数值的下标所对应的值
         while (right > f[k] -1){
             k++;
@@ -237,7 +249,8 @@ public class SearchAlgorithm {
         //来找我们的findVal,循环处理
         while (left <= right){
             mid = left + f[k -1] -1;
-            if (findVal < temp[mid]){ //我们应该在数组的左边继续找
+            //我们应该在数组的左边继续找
+            if (findVal < temp[mid]){
                 right = mid -1;
                 //说明:
                 //1.我们数组的全部元数 = left左边 +right元素
@@ -245,7 +258,9 @@ public class SearchAlgorithm {
                 //3. 可以发现的,当前左边还有f[k -1]个元素,因此可以继续拆分f[k -1] = f[k -2] + f[k -3]等
                 // 也就是说在f[k -1]的左边继续查找,即 k-- 即 mid = f[k - 1 -1] -1
                 k --;
-            }else if (findVal > temp[mid]){ //我们应该在数组的右边继续找
+            }
+            //我们应该在数组的右边继续找
+            else if (findVal > temp[mid]){
                 left = mid +1;
                 //说明:
                 //1.我们数组的全部元数 = left左边 +right元素

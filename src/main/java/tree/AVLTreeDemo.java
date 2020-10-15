@@ -32,12 +32,19 @@ public class AVLTreeDemo {
     static class AVLTree {
         private Node root;
 
+        /**
+          *  中序遍历
+          */
         public void print() {
             if (null != root) {
                 root.inOrder();
             }
         }
 
+        /**
+          *  添加节点
+          * @param value 值
+          */
         public void add(int value) {
             Node node = new Node(value);
             if (root == null) {
@@ -47,14 +54,26 @@ public class AVLTreeDemo {
             }
         }
 
+        /**
+         * 树的高度
+         * @return 树的高度
+         */
         public int height() {
             return root.height();
         }
 
+        /**
+         * 右子树高度
+         * @return 右子树高度
+         */
         public int rightHeight() {
             return root.rightHeight();
         }
 
+        /**
+         * 左子树高度
+         * @return 左子树高度
+         */
         public int leftHeight() {
             return root.leftHeight();
         }
@@ -69,11 +88,16 @@ public class AVLTreeDemo {
             this.no = no;
         }
 
+        /**
+         * 添加节点
+         * @param node 待添加节点
+         */
         public void add(Node node) {
             if (null == node) {
                 return;
             }
 
+            // 判断节点大小
             if (this.no >= node.no) {
                 if (null == this.left) {
                     this.left = node;
@@ -88,6 +112,7 @@ public class AVLTreeDemo {
                 }
             }
 
+            // 判断左右子树高度, 决定双旋还是单旋
             if (this.leftHeight() - this.rightHeight() > 1) {
                 if (this.left.rightHeight() > this.left.leftHeight()) {
                     this.left.leftRotate();
@@ -132,7 +157,9 @@ public class AVLTreeDemo {
             return Math.max(null != this.left ? this.left.height() : 0, null != this.right ? this.right.height() : 0) + 1;
         }
 
-
+        /**
+         * 左旋
+         */
         private void leftRotate() {
             Node newNode = new Node(no);
             newNode.right = this.right.left;
@@ -142,6 +169,9 @@ public class AVLTreeDemo {
             this.left = newNode;
         }
 
+        /**
+         * 右旋
+         */
         private void rightRotate() {
             Node newNode = new Node(no);
             newNode.left = this.left.right;
