@@ -14,15 +14,16 @@ public class SearchAlgorithm {
 
     public static void main(String[] args) {
 
-//        int[] arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 11, 12, 13, 13, 13};
-        int[] arr = new int[5];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = (i +  1) * 5;
-        }
+        int[] arr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 11, 12, 13, 13, 13};
+//        int[] arr = new int[5];
+//        for (int i = 0; i < arr.length; i++) {
+//            arr[i] = (i +  1) * 5;
+//        }
 
 //        List<Integer> integers = interpolationSearchAlgorithm(arr, 16, 0, arr.length - 1);
 //        List<Integer> integers = fibonacciSearchAlgorithm(arr, 13);
-        int i = binarySearchAlgorithm1(arr, 24, 0, arr.length - 1);
+//        int i = binarySearchAlgorithm1(arr, 24, 0, arr.length - 1);
+        int i = binarySearchAlgorithmNonRecursion(arr, 12);
         System.out.println(Arrays.toString(arr));
         System.out.println(i);
 
@@ -53,6 +54,31 @@ public class SearchAlgorithm {
 
             return getIntegers(arr, target, middle);
         }
+    }
+
+    /**
+     * 二分查找 (非递归)
+     * @param arr 数据
+     * @param target 目标值
+     * @return 目标索引
+     */
+    private static int binarySearchAlgorithmNonRecursion(int[] arr, int target) {
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+            int middle = (left + right) / 2;
+
+            if (target > arr[middle]) {
+                left = middle + 1;
+            } else if (target < arr[middle]) {
+                right = middle - 1;
+            } else {
+                return middle;
+            }
+        }
+        return -1;
     }
 
     private static int binarySearchAlgorithm1(int[] arr, int target, int left, int right) {
